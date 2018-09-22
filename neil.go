@@ -9,14 +9,6 @@ import (
 
 func main() {
 	node := NewNode()
-
-	for _, block := range node.Blockchain.blocks {
-		fmt.Printf("Prev. hash: %x\n", block.PrevBlockHash)
-		fmt.Printf("Data: %s\n", block.Data)
-		fmt.Printf("Hash: %x\n", block.Hash)
-		fmt.Println()
-	}
-
 	node.RunApiServer()
 
 	fmt.Println("Neil is running...")

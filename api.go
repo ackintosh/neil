@@ -1,6 +1,10 @@
 package main
 
-import "net/http"
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
 
 func (node *Node) buildApiServer() {
 	mux := http.NewServeMux()
@@ -13,6 +17,11 @@ func (node *Node) buildApiServer() {
 }
 
 func (node *Node) blocksHandler(w http.ResponseWriter, r *http.Request) {
+	bytes, err := json.Marshal(node.Blockchain.blocks)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte{})
+	w.Write(bytes)
 }
