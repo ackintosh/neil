@@ -2,15 +2,17 @@ package main
 
 import "net/http"
 
-func NewApiServer() *http.Server {
+func (node *Node) buildApiServer() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/blocks", func (w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte{})
-	})
+	mux.HandleFunc("/blocks", node.blocksHandler)
 
-	return &http.Server{
+	node.ApiServer = &http.Server{
 		Handler: mux,
 		Addr: ":3001",
 	}
+}
+
+func (node *Node) blocksHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte{})
 }

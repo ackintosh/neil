@@ -16,7 +16,10 @@ func NewNode() *Node {
 	blockchain.AddBlock("Send 1 BTC to Ivan")
 	blockchain.AddBlock("Send 2 more BTC to Ivan")
 
-	return &Node{blockchain, NewApiServer()}
+	node := &Node{blockchain, nil}
+	node.buildApiServer()
+
+	return node
 }
 
 func (node *Node) RunApiServer() {
