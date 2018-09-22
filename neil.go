@@ -39,4 +39,6 @@ func main() {
 	fmt.Println("\nsignal: ", s)
 	fmt.Println("Shutting down API server.")
 	apiServer.Shutdown(context.Background())
+
+	fmt.Println("\nNeil has completely shutdown. Thanks for giving it a try!")
 }
