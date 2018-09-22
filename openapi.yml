@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  description: The specification for the REST API of Neil.
+  version: 0.0.1
+  title: the REST API of Neil
+paths:
+  /blocks:
+    get:
+      description: Returns all blocks which exists in the Neil node.
+      operationId: getBlocks
+      responses:
+        200:
+          description: All blocks which exists in the Neil node.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Block'
+              example: >-
+                [
+                  {
+                    "Timestamp": 1537608825,
+                    "Data": "R2VuZXNpcyBCbG9jaw==",
+                    "PrevBlockHash": "",
+                    "Hash": "xKt+P2UbcN1ouK9Mv03K3QNOBP0PJSCVcEr000rk/pc="
+                  },
+                  {
+                    "Timestamp": 1537608825,
+                    "Data": "U2VuZCAxIEJUQyB0byBJdmFu",
+                    "PrevBlockHash": "xKt+P2UbcN1ouK9Mv03K3QNOBP0PJSCVcEr000rk/pc=",
+                    "Hash": "8fKKuciRH34TQueQn31JINNPKscdVFN1GNKERA5J3IU="
+                  },
+                  {
+                    "Timestamp": 1537608825,
+                    "Data": "U2VuZCAyIG1vcmUgQlRDIHRvIEl2YW4=",
+                    "PrevBlockHash": "8fKKuciRH34TQueQn31JINNPKscdVFN1GNKERA5J3IU=",
+                    "Hash": "rgbCEArxzlypgBO9h/X966iociYyX9FPaoBFDktrmMo="
+                  }
+                ]
+                \
+components:
+  schemas:
+    Block:
+      type: object
+      properties:
+        Timestamp:
+          type: integer
+          format: int64
+          example: 1537608825
+        Data:
+          type: string
+          example: R2VuZXNpcyBCbG9jaw==
+        PrevBlockHash:
+          type: string
+          example: xKt+P2UbcN1ouK9Mv03K3QNOBP0PJSCVcEr000rk/pc=
+        Hash:
+          type: string
+          example: 8fKKuciRH34TQueQn31JINNPKscdVFN1GNKERA5J3IU=
