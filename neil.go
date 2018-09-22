@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"os/signal"
@@ -18,13 +17,7 @@ func main() {
 		fmt.Println()
 	}
 
-	apiServer := NewApiServer()
-	go func() {
-		fmt.Println("API server is running on port 3001.")
-		if err := apiServer.ListenAndServe(); err != nil {
-			fmt.Println(err)
-		}
-	}()
+	node.RunApiServer()
 
 	fmt.Println("Neil is running...")
 	fmt.Println("Press Ctrl+C to stop. :)")
@@ -34,8 +27,7 @@ func main() {
 
 	s := <-signalCh
 	fmt.Println("\nsignal: ", s)
-	fmt.Println("Shutting down API server.")
-	apiServer.Shutdown(context.Background())
+	node.ShutdownApiServer()
 
 	fmt.Println("\nNeil has completely shutdown. Thanks for giving it a try!")
 }
