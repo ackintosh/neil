@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"os/signal"
@@ -32,6 +33,10 @@ func main() {
 	fmt.Println("Press Ctrl+C to stop. :)")
 
 	signalCh := make(chan os.Signal)
-	signal.Notify(signalCh, syscall.SIGTERM)
-	<-signalCh
+	signal.Notify(signalCh, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+
+	s := <-signalCh
+	fmt.Println("\nsignal: ", s)
+	fmt.Println("Shutting down API server.")
+	apiServer.Shutdown(context.Background())
 }
