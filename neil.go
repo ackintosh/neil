@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+)
 
 func main() {
 	bc := NewBlockchain()
@@ -14,4 +19,8 @@ func main() {
 		fmt.Printf("Hash: %x\n", block.Hash)
 		fmt.Println()
 	}
+
+	signalCh := make(chan os.Signal)
+	signal.Notify(signalCh, syscall.SIGTERM)
+	<-signalCh
 }
