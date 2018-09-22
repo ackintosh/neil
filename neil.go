@@ -20,6 +20,14 @@ func main() {
 		fmt.Println()
 	}
 
+	apiServer := NewApiServer()
+	go func() {
+		fmt.Println("API server is running on port 3001.")
+		if err := apiServer.ListenAndServe(); err != nil {
+			fmt.Println(err)
+		}
+	}()
+
 	fmt.Println("Neil is running...")
 	fmt.Println("Press Ctrl+C to stop. :)")
 
