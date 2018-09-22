@@ -1,19 +1,40 @@
 # Neil
 
+* Terminal 1
+
 ```bash
 $ cd neil
 $ go install
 $ $GOPATH/bin/neil
 
-Prev. hash:
-Data: Genesis Block
-Hash: ed865b96c2cfa99a4f209ebc1e683afd77c9b8d29af203afa39741b030bee4e1
+Neil is running...
+Press Ctrl+C to stop. :)
+API server is running on port 3001.
+```
 
-Prev. hash: ed865b96c2cfa99a4f209ebc1e683afd77c9b8d29af203afa39741b030bee4e1
-Data: Send 1 BTC to Ivan
-Hash: 572b46576c861c43e941ffe5deaaee767d964a8004129e8b9df3d9e4c43310a1
+* Terminal 2
 
-Prev. hash: 572b46576c861c43e941ffe5deaaee767d964a8004129e8b9df3d9e4c43310a1
-Data: Send 2 more BTC to Ivan
-Hash: eba1044ccc436a58895ea4c2579f0c79d23a3a181f255f1b686bd2c563c0b6c4
+```bash
+$ curl -s http://localhost:3001/blocks | jq
+
+[
+  {
+    "Timestamp": 1537608825,
+    "Data": "R2VuZXNpcyBCbG9jaw==",
+    "PrevBlockHash": "",
+    "Hash": "xKt+P2UbcN1ouK9Mv03K3QNOBP0PJSCVcEr000rk/pc="
+  },
+  {
+    "Timestamp": 1537608825,
+    "Data": "U2VuZCAxIEJUQyB0byBJdmFu",
+    "PrevBlockHash": "xKt+P2UbcN1ouK9Mv03K3QNOBP0PJSCVcEr000rk/pc=",
+    "Hash": "8fKKuciRH34TQueQn31JINNPKscdVFN1GNKERA5J3IU="
+  },
+  {
+    "Timestamp": 1537608825,
+    "Data": "U2VuZCAyIG1vcmUgQlRDIHRvIEl2YW4=",
+    "PrevBlockHash": "8fKKuciRH34TQueQn31JINNPKscdVFN1GNKERA5J3IU=",
+    "Hash": "rgbCEArxzlypgBO9h/X966iociYyX9FPaoBFDktrmMo="
+  }
+]
 ```
