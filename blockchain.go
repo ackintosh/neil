@@ -30,11 +30,12 @@ func (bc *Blockchain) CreateGenesisBlock() {
 	bc.blocks = append(bc.blocks, bc.NewBlock([]byte{}, []*Transaction{}))
 }
 
-func (bc *Blockchain) AddBlock() {
+func (bc *Blockchain) createBlock() *Block {
 	prevBlock := bc.blocks[len(bc.blocks)-1]
 	newBlock := bc.NewBlock(prevBlock.Hash, bc.transactions)
 	bc.transactions = []*Transaction{}
-	bc.blocks = append(bc.blocks, newBlock)
+
+	return newBlock
 }
 
 func (bc *Blockchain) AddTransaction(tx *Transaction) {
