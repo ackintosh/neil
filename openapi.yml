@@ -21,30 +21,32 @@ paths:
                 [
                   {
                     "Index": 0,
-                    "Timestamp": 1537683239,
-                    "Data": "R2VuZXNpcyBCbG9jaw==",
+                    "Timestamp": 1537705411,
                     "PrevBlockHash": "",
-                    "Hash": "00ykmECYY7f8+qVmqlD7tMva1sxYfUx6UymI+s42bDE=",
-                    "Transactions": []
+                    "Hash": "",
+                    "Transactions": [],
+                    "Nonce": 0
                   },
                   {
                     "Index": 1,
-                    "Timestamp": 1537683239,
-                    "Data": "U2FtcGxlIGJsb2Nr",
-                    "PrevBlockHash": "00ykmECYY7f8+qVmqlD7tMva1sxYfUx6UymI+s42bDE=",
-                    "Hash": "lnKgwsyKWyL3UQLYQEvggT3W1Qj30cxQLP+fuRqBgTA=",
+                    "Timestamp": 1537705411,
+                    "PrevBlockHash": "",
+                    "Hash": "MDAwrF6MlZiRA6ESf9ynko9aoSJctNIO6jHKx2JVoX8=",
                     "Transactions": [
                       {
                         "Sender": "Qm9i",
                         "Recipient": "SXZhbg==",
-                        "Amount": 1
+                        "Amount": 1,
+                        "Hash": "k5uM9bhJW2bPzpHrJhvsLI+G/O6dM+Gva9IevkOsscg="
                       },
                       {
                         "Sender": "Qm9i",
                         "Recipient": "SXZhbg==",
-                        "Amount": 2
+                        "Amount": 2,
+                        "Hash": "Lc/3OlusjdPBTX0SVkC/gFpnMfdOBF9agTc83ZHU6A4="
                       }
-                    ]
+                    ],
+                    "Nonce": 22403054
                   }
                 ]
                 \
@@ -100,3 +102,6 @@ components:
           type: integer
           format: int64
           example: 3
+        Hash:
+          type: string
+          example: MDAwTxpaBTtpzEXaUHn2x/aagGGedV7Yrw4pFSLncgE=
