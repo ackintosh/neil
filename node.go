@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -71,4 +72,6 @@ func (node *Node) ProofOfWork() {
 	block.Nonce = nonce
 	block.Hash = hash[:]
 	node.Blockchain.blocks = append(node.Blockchain.blocks, block)
+	fmt.Print("Added new block: ")
+	fmt.Println(hex.EncodeToString(block.Hash))
 }
