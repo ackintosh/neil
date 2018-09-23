@@ -26,7 +26,7 @@ func NewNode() *Node {
 	return node
 }
 
-func (node *Node) RunApiServer() {
+func (node *Node) runApiServer() {
 	go func() {
 		fmt.Println("REST API server is listening on http://localhost:3001")
 		if err := node.ApiServer.ListenAndServe(); err != nil {
@@ -35,7 +35,7 @@ func (node *Node) RunApiServer() {
 	}()
 }
 
-func (node *Node) ShutdownApiServer() {
+func (node *Node) shutdownApiServer() {
 	fmt.Println("Shutting down REST API server.")
 	node.ApiServer.Shutdown(context.Background())
 }
@@ -44,12 +44,12 @@ func (node *Node) runMining() {
 	fmt.Println("Mining blocks...")
 	go func () {
 		for {
-			node.ProofOfWork()
+			node.proofOfWork()
 		}
 	}()
 }
 
-func (node *Node) ProofOfWork() {
+func (node *Node) proofOfWork() {
 	block := node.Blockchain.createBlock()
 	var nonce int64 = 0
 	var hash [32]byte
