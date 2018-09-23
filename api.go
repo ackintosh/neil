@@ -18,7 +18,7 @@ func (node *Node) buildApiServer() {
 }
 
 func (node *Node) chainHandler(w http.ResponseWriter, r *http.Request) {
-	bytes, err := json.Marshal(node.Blockchain.blocks)
+	bytes, err := json.Marshal(node.Chain.blocks)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -40,6 +40,6 @@ func (node *Node) newTransactionHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	node.Blockchain.AddTransaction(NewTransaction(params.Sender, params.Recipient, params.Amount))
+	node.Chain.AddTransaction(NewTransaction(params.Sender, params.Recipient, params.Amount))
 	w.WriteHeader(http.StatusCreated)
 }
