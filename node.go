@@ -69,7 +69,7 @@ func (node *Node) proofOfWork() {
 		)
 		hash32Bytes := sha256.Sum256(headers)
 		hash = hex.EncodeToString(hash32Bytes[:])
-		if hash[:3] == "000" {
+		if hash[:5] == "00000" {
 			break
 		}
 		nonce++
