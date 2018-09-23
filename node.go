@@ -48,7 +48,7 @@ func (node *Node) runMining() {
 	}()
 }
 
-func (node *Node) ProofOfWork() int64 {
+func (node *Node) ProofOfWork() {
 	block := node.Blockchain.createBlock()
 	var nonce int64 = 0
 	var hash [32]byte
@@ -71,6 +71,4 @@ func (node *Node) ProofOfWork() int64 {
 	block.Nonce = nonce
 	block.Hash = hash[:]
 	node.Blockchain.blocks = append(node.Blockchain.blocks, block)
-
-	return nonce
 }
