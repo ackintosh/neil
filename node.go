@@ -24,7 +24,7 @@ func NewNode() *Node {
 
 func (node *Node) RunApiServer() {
 	go func() {
-		fmt.Println("API server is running on port 3001.")
+		fmt.Println("REST API server is listening on http://localhost:3001")
 		if err := node.ApiServer.ListenAndServe(); err != nil {
 			fmt.Println(err)
 		}
@@ -32,6 +32,6 @@ func (node *Node) RunApiServer() {
 }
 
 func (node *Node) ShutdownApiServer() {
-	fmt.Println("Shutting down API server.")
+	fmt.Println("Shutting down REST API server.")
 	node.ApiServer.Shutdown(context.Background())
 }
