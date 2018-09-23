@@ -48,6 +48,20 @@ paths:
                   }
                 ]
                 \
+  /transactions/new:
+    post:
+      description: Post new transaction
+      operationId: postTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        201:
+          description: A transaction is created successfully.
+        500:
+          description: Internal server error.
 components:
   schemas:
     Block:
