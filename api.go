@@ -8,7 +8,7 @@ import (
 
 func (node *Node) buildApiServer() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/blocks", node.blocksHandler)
+	mux.HandleFunc("/chain", node.chainHandler)
 
 	node.ApiServer = &http.Server{
 		Handler: mux,
@@ -16,7 +16,7 @@ func (node *Node) buildApiServer() {
 	}
 }
 
-func (node *Node) blocksHandler(w http.ResponseWriter, r *http.Request) {
+func (node *Node) chainHandler(w http.ResponseWriter, r *http.Request) {
 	bytes, err := json.Marshal(node.Blockchain.blocks)
 	if err != nil {
 		fmt.Println(err)
