@@ -1,9 +1,9 @@
 package main
 
 type Transaction struct {
-	sender []byte
-	recipient []byte
-	amount int64
+	Sender []byte
+	Recipient []byte
+	Amount int64
 }
 
 func NewTransaction(sender []byte, recipient []byte, amount int64) *Transaction {

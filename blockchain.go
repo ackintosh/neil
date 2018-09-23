@@ -7,7 +7,8 @@ type Blockchain struct {
 
 func (bc *Blockchain) AddBlock(data string) {
 	prevBlock := bc.blocks[len(bc.blocks)-1]
-	newBlock := NewBlock(data, prevBlock.Hash)
+	newBlock := NewBlock(data, prevBlock.Hash, bc.transactions)
+	bc.transactions = []*Transaction{}
 	bc.blocks = append(bc.blocks, newBlock)
 }
 
@@ -16,7 +17,7 @@ func (bc *Blockchain) AddTransaction(tx *Transaction) {
 }
 
 func NewGenesisBlock() *Block {
-	return NewBlock("Genesis Block", []byte{})
+	return NewBlock("Genesis Block", []byte{}, []*Transaction{})
 }
 
 func NewBlockchain() *Blockchain {
