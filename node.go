@@ -54,9 +54,14 @@ func (node *Node) proofOfWork() {
 	var nonce int64 = 0
 	var hash [32]byte
 	for {
+		var txHashes [][]byte
+		for _, tx := range block.Transactions {
+			txHashes = append(txHashes, tx.Hash)
+		}
 		headers := bytes.Join(
 			[][]byte{
 				block.PrevBlockHash[:],// [32]byte -> []byte
+				bytes.Join(txHashes, []byte{}),
 				[]byte(strconv.FormatInt(block.Timestamp, 10)),
 				[]byte(strconv.FormatInt(nonce, 10)),
 			},
