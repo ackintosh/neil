@@ -56,7 +56,7 @@ func (node *Node) proofOfWork() {
 	for {
 		var txHashes [][]byte
 		for _, tx := range block.Transactions {
-			txHashes = append(txHashes, tx.Hash)
+			txHashes = append(txHashes, []byte(tx.Hash))
 		}
 		headers := bytes.Join(
 			[][]byte{
