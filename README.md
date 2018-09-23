@@ -15,21 +15,23 @@ API server is running on port 3001.
 * Terminal 2
 
 ```bash
-$ curl -s http://localhost:3001/blocks | jq
+$ curl -s http://localhost:3001/chain | jq
 
 [
   {
-    "Timestamp": 1537674920,
+    "Index": 0,
+    "Timestamp": 1537684382,
     "Data": "R2VuZXNpcyBCbG9jaw==",
     "PrevBlockHash": "",
-    "Hash": "bpN93jZa5YYoINUMa+KA67ATy5FhRMK8hckeOZTgWd4=",
+    "Hash": "C5uEBPd/yvOqrH1qTSrJbJAIlj7q0Sl9iYidz5cKD6o=",
     "Transactions": []
   },
   {
-    "Timestamp": 1537674920,
+    "Index": 1,
+    "Timestamp": 1537684382,
     "Data": "U2FtcGxlIGJsb2Nr",
-    "PrevBlockHash": "bpN93jZa5YYoINUMa+KA67ATy5FhRMK8hckeOZTgWd4=",
-    "Hash": "xH+GiFs3mHuonyNnMAHT7YXFsYy9pzT+u2kxcURRxDY=",
+    "PrevBlockHash": "C5uEBPd/yvOqrH1qTSrJbJAIlj7q0Sl9iYidz5cKD6o=",
+    "Hash": "/JV/BzOHipWOjMhlzU8aP6ip3ZCefxum0zjXdXQlENE=",
     "Transactions": [
       {
         "Sender": "Qm9i",
