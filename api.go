@@ -9,6 +9,7 @@ import (
 func (node *Node) buildApiServer() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/chain", node.chainHandler)
+	mux.HandleFunc("/transactions/new", node.newTransactionHandler)
 
 	node.ApiServer = &http.Server{
 		Handler: mux,
@@ -24,4 +25,21 @@ func (node *Node) chainHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(bytes)
+}
+
+func (node *Node) newTransactionHandler(w http.ResponseWriter, r *http.Request) {
+	var params struct {
+		Sender []byte `json:"Sender"`
+		Recipient []byte `json:"Recipient"`
+		Amount int64 `json:"Amount"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&params); err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	node.Blockchain.AddTransaction(NewTransaction(params.Sender, params.Recipient, params.Amount))
+	w.WriteHeader(http.StatusCreated)
 }
