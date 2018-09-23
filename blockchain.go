@@ -2,6 +2,7 @@ package main
 
 type Blockchain struct {
 	blocks []*Block
+	transactions []*Transaction
 }
 
 func (bc *Blockchain) AddBlock(data string) {
@@ -10,10 +11,14 @@ func (bc *Blockchain) AddBlock(data string) {
 	bc.blocks = append(bc.blocks, newBlock)
 }
 
+func (bc *Blockchain) AddTransaction(tx *Transaction) {
+	bc.transactions = append(bc.transactions, tx)
+}
+
 func NewGenesisBlock() *Block {
 	return NewBlock("Genesis Block", []byte{})
 }
 
 func NewBlockchain() *Blockchain {
-	return &Blockchain{[]*Block{NewGenesisBlock()}}
+	return &Blockchain{[]*Block{NewGenesisBlock()}, []*Transaction{}}
 }
