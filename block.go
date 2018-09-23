@@ -12,6 +12,7 @@ type Block struct {
 	Data []byte
 	PrevBlockHash []byte
 	Hash []byte
+	Transactions []*Transaction
 }
 
 func (b *Block) SetHash() {
@@ -21,8 +22,8 @@ func (b *Block) SetHash() {
 	b.Hash = hash[:]
 }
 
-func NewBlock(data string, prevBlockHash []byte) *Block {
-	block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}}
+func NewBlock(data string, prevBlockHash []byte, transactions []*Transaction) *Block {
+	block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}, transactions}
 	block.SetHash()
 	return block
 }

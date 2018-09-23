@@ -13,8 +13,9 @@ type Node struct {
 
 func NewNode() *Node {
 	blockchain := NewBlockchain()
-	blockchain.AddBlock("Send 1 BTC to Ivan")
-	blockchain.AddBlock("Send 2 more BTC to Ivan")
+	blockchain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
+	blockchain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
+	blockchain.AddBlock("Sample block")
 
 	node := &Node{blockchain, nil}
 	node.buildApiServer()

@@ -19,22 +19,29 @@ $ curl -s http://localhost:3001/blocks | jq
 
 [
   {
-    "Timestamp": 1537608825,
+    "Timestamp": 1537674920,
     "Data": "R2VuZXNpcyBCbG9jaw==",
     "PrevBlockHash": "",
-    "Hash": "xKt+P2UbcN1ouK9Mv03K3QNOBP0PJSCVcEr000rk/pc="
+    "Hash": "bpN93jZa5YYoINUMa+KA67ATy5FhRMK8hckeOZTgWd4=",
+    "Transactions": []
   },
   {
-    "Timestamp": 1537608825,
-    "Data": "U2VuZCAxIEJUQyB0byBJdmFu",
-    "PrevBlockHash": "xKt+P2UbcN1ouK9Mv03K3QNOBP0PJSCVcEr000rk/pc=",
-    "Hash": "8fKKuciRH34TQueQn31JINNPKscdVFN1GNKERA5J3IU="
-  },
-  {
-    "Timestamp": 1537608825,
-    "Data": "U2VuZCAyIG1vcmUgQlRDIHRvIEl2YW4=",
-    "PrevBlockHash": "8fKKuciRH34TQueQn31JINNPKscdVFN1GNKERA5J3IU=",
-    "Hash": "rgbCEArxzlypgBO9h/X966iociYyX9FPaoBFDktrmMo="
+    "Timestamp": 1537674920,
+    "Data": "U2FtcGxlIGJsb2Nr",
+    "PrevBlockHash": "bpN93jZa5YYoINUMa+KA67ATy5FhRMK8hckeOZTgWd4=",
+    "Hash": "xH+GiFs3mHuonyNnMAHT7YXFsYy9pzT+u2kxcURRxDY=",
+    "Transactions": [
+      {
+        "Sender": "Qm9i",
+        "Recipient": "SXZhbg==",
+        "Amount": 1
+      },
+      {
+        "Sender": "Qm9i",
+        "Recipient": "SXZhbg==",
+        "Amount": 2
+      }
+    ]
   }
 ]
 ```
