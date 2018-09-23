@@ -47,7 +47,7 @@ func (node *Node) ProofOfWork() int64 {
 	for {
 		headers := bytes.Join(
 			[][]byte{
-				block.PrevBlockHash,
+				block.PrevBlockHash[:],// [32]byte -> []byte
 				[]byte(strconv.FormatInt(block.Timestamp, 10)),
 				[]byte(strconv.FormatInt(nonce, 10)),
 			},
