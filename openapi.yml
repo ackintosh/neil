@@ -20,17 +20,19 @@ paths:
               example: >-
                 [
                   {
-                    "Timestamp": 1537674920,
+                    "Index": 0,
+                    "Timestamp": 1537683239,
                     "Data": "R2VuZXNpcyBCbG9jaw==",
                     "PrevBlockHash": "",
-                    "Hash": "bpN93jZa5YYoINUMa+KA67ATy5FhRMK8hckeOZTgWd4=",
+                    "Hash": "00ykmECYY7f8+qVmqlD7tMva1sxYfUx6UymI+s42bDE=",
                     "Transactions": []
                   },
                   {
-                    "Timestamp": 1537674920,
+                    "Index": 1,
+                    "Timestamp": 1537683239,
                     "Data": "U2FtcGxlIGJsb2Nr",
-                    "PrevBlockHash": "bpN93jZa5YYoINUMa+KA67ATy5FhRMK8hckeOZTgWd4=",
-                    "Hash": "xH+GiFs3mHuonyNnMAHT7YXFsYy9pzT+u2kxcURRxDY=",
+                    "PrevBlockHash": "00ykmECYY7f8+qVmqlD7tMva1sxYfUx6UymI+s42bDE=",
+                    "Hash": "lnKgwsyKWyL3UQLYQEvggT3W1Qj30cxQLP+fuRqBgTA=",
                     "Transactions": [
                       {
                         "Sender": "Qm9i",
@@ -51,6 +53,9 @@ components:
     Block:
       type: object
       properties:
+        Index:
+          type: integer
+          format: int64
         Timestamp:
           type: integer
           format: int64
