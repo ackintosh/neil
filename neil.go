@@ -10,6 +10,7 @@ import (
 func main() {
 	node := NewNode()
 	node.RunApiServer()
+	node.runMining()
 
 	fmt.Println("Neil is running...")
 	fmt.Println("Press Ctrl+C to stop. :)")

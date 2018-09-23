@@ -21,7 +21,6 @@ func NewNode() *Node {
 
 	node := &Node{blockchain, nil}
 	node.buildApiServer()
-	node.ProofOfWork()
 
 	return node
 }
@@ -38,6 +37,15 @@ func (node *Node) RunApiServer() {
 func (node *Node) ShutdownApiServer() {
 	fmt.Println("Shutting down REST API server.")
 	node.ApiServer.Shutdown(context.Background())
+}
+
+func (node *Node) runMining() {
+	fmt.Println("Mining blocks...")
+	go func () {
+		for {
+			node.ProofOfWork()
+		}
+	}()
 }
 
 func (node *Node) ProofOfWork() int64 {
@@ -62,6 +70,7 @@ func (node *Node) ProofOfWork() int64 {
 
 	block.Nonce = nonce
 	block.Hash = hash[:]
+	node.Blockchain.blocks = append(node.Blockchain.blocks, block)
 
 	return nonce
 }
