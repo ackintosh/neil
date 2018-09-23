@@ -15,7 +15,7 @@ func NewNode() *Node {
 	blockchain := NewBlockchain()
 	blockchain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
 	blockchain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
-	blockchain.AddBlock("Sample block")
+	blockchain.AddBlock()
 
 	node := &Node{blockchain, nil}
 	node.buildApiServer()
