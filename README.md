@@ -27,30 +27,40 @@ $ curl -s http://localhost:3001/chain | jq
 [
   {
     "Index": 0,
-    "Timestamp": 1537684382,
-    "Data": "R2VuZXNpcyBCbG9jaw==",
+    "Timestamp": 1537720981,
     "PrevBlockHash": "",
-    "Hash": "C5uEBPd/yvOqrH1qTSrJbJAIlj7q0Sl9iYidz5cKD6o=",
-    "Transactions": []
+    "Hash": "",
+    "Transactions": [],
+    "Nonce": 0
   },
   {
     "Index": 1,
-    "Timestamp": 1537684382,
-    "Data": "U2FtcGxlIGJsb2Nr",
-    "PrevBlockHash": "C5uEBPd/yvOqrH1qTSrJbJAIlj7q0Sl9iYidz5cKD6o=",
-    "Hash": "/JV/BzOHipWOjMhlzU8aP6ip3ZCefxum0zjXdXQlENE=",
+    "Timestamp": 1537720981,
+    "PrevBlockHash": "",
+    "Hash": "00000b9c434cc4e006a76974d6db550da2127fd5b5f2b100a772abe98965376b",
     "Transactions": [
       {
         "Sender": "Qm9i",
         "Recipient": "SXZhbg==",
-        "Amount": 1
+        "Amount": 1,
+        "Hash": "939b8cf5b8495b66cfce91eb261bec2c8f86fcee9d33e1af6bd21ebe43acb1c8"
       },
       {
         "Sender": "Qm9i",
         "Recipient": "SXZhbg==",
-        "Amount": 2
+        "Amount": 2,
+        "Hash": "2dcff73a5bac8dd3c14d7d125640bf805a6731f74e045f5a81373cdd91d4e80e"
       }
-    ]
+    ],
+    "Nonce": 1033341
+  },
+  {
+    "Index": 2,
+    "Timestamp": 1537720983,
+    "PrevBlockHash": "00000b9c434cc4e006a76974d6db550da2127fd5b5f2b100a772abe98965376b",
+    "Hash": "000009e9b4e5d014df8f3ec641cdf8bebac7f832c89897df13101efeea5bed7f",
+    "Transactions": [],
+    "Nonce": 279745
   }
 ]
 ```
