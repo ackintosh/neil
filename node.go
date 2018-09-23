@@ -61,7 +61,7 @@ func (node *Node) ProofOfWork() int64 {
 	}
 
 	block.Nonce = nonce
-	block.Hash = hash
+	block.Hash = hash[:]
 
 	return nonce
 }
