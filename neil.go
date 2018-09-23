@@ -9,7 +9,8 @@ import (
 
 func main() {
 	node := NewNode()
-	node.RunApiServer()
+	node.runApiServer()
+	node.runMining()
 
 	fmt.Println("Neil is running...")
 	fmt.Println("Press Ctrl+C to stop. :)")
@@ -19,7 +20,7 @@ func main() {
 
 	s := <-signalCh
 	fmt.Println("\nsignal: ", s)
-	node.ShutdownApiServer()
+	node.shutdownApiServer()
 
 	fmt.Println("\nNeil has completely shutdown. Thanks for giving it a try!")
 }
