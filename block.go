@@ -7,6 +7,7 @@ import (
 )
 
 type Block struct {
+	Index int
 	Timestamp int64
 	Data []byte
 	PrevBlockHash []byte
