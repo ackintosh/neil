@@ -4,13 +4,13 @@ info:
   version: 0.0.1
   title: the REST API of Neil
 paths:
-  /blocks:
+  /chain:
     get:
-      description: Returns all blocks which exists in the Neil node.
-      operationId: getBlocks
+      description: Returns chain which exists in the Neil node.
+      operationId: getChain
       responses:
         200:
-          description: All blocks which exists in the Neil node.
+          description: Chain which exists in the Neil node.
           content:
             application/json:
               schema:
