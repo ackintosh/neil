@@ -48,4 +48,4 @@ $ curl -s http://localhost:3001/chain | jq
 ]
 ```
 
-See [openapi.yml](https://github.com/ackintosh/neil/blob/master/openapi.yml) for further detail of REST API.
+See [openapi.yml](https://github.com/ackintosh/neil/blob/master/openapi.yml) for further detail of the REST API.
