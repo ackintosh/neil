@@ -11,16 +11,16 @@ import (
 )
 
 type Node struct {
-	Blockchain *Blockchain
+	Chain     *Chain
 	ApiServer *http.Server
 }
 
 func NewNode() *Node {
-	blockchain := NewBlockchain()
-	blockchain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
-	blockchain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
+	chain := NewChain()
+	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
+	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
 
-	node := &Node{blockchain, nil}
+	node := &Node{chain, nil}
 	node.buildApiServer()
 
 	return node
@@ -50,7 +50,7 @@ func (node *Node) runMining() {
 }
 
 func (node *Node) proofOfWork() {
-	block := node.Blockchain.createBlock()
+	block := node.Chain.createBlock()
 	var nonce int64 = 0
 	var hash [32]byte
 	for {
@@ -71,7 +71,7 @@ func (node *Node) proofOfWork() {
 
 	block.Nonce = nonce
 	block.Hash = hash[:]
-	node.Blockchain.blocks = append(node.Blockchain.blocks, block)
+	node.Chain.blocks = append(node.Chain.blocks, block)
 	fmt.Print("Added new block: ")
 	fmt.Println(hex.EncodeToString(block.Hash))
 }
