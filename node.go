@@ -62,7 +62,7 @@ func (node *Node) ProofOfWork() {
 			[]byte{},
 		)
 		hash = sha256.Sum256(headers)
-		if bytes.Equal(hash[:2], []byte("00")) {
+		if bytes.Equal(hash[:3], []byte("000")) {
 			break
 		}
 		nonce++
