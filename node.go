@@ -52,7 +52,7 @@ func (node *Node) runMining() {
 func (node *Node) proofOfWork() {
 	block := node.Chain.createBlock()
 	var nonce int64 = 0
-	var hash [32]byte
+	var hash string
 	for {
 		var txHashes [][]byte
 		for _, tx := range block.Transactions {
@@ -60,23 +60,24 @@ func (node *Node) proofOfWork() {
 		}
 		headers := bytes.Join(
 			[][]byte{
-				block.PrevBlockHash[:],// [32]byte -> []byte
+				[]byte(block.PrevBlockHash),
 				bytes.Join(txHashes, []byte{}),
 				[]byte(strconv.FormatInt(block.Timestamp, 10)),
 				[]byte(strconv.FormatInt(nonce, 10)),
 			},
 			[]byte{},
 		)
-		hash = sha256.Sum256(headers)
-		if bytes.Equal(hash[:3], []byte("000")) {
+		hash32Bytes := sha256.Sum256(headers)
+		hash = hex.EncodeToString(hash32Bytes[:])
+		if hash[:3] == "000" {
 			break
 		}
 		nonce++
 	}
 
 	block.Nonce = nonce
-	block.Hash = hash[:]
+	block.Hash = hash
 	node.Chain.blocks = append(node.Chain.blocks, block)
 	fmt.Print("Added new block: ")
-	fmt.Println(hex.EncodeToString(block.Hash))
+	fmt.Println(block.Hash)
 }

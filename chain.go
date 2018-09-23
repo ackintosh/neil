@@ -13,12 +13,12 @@ func NewChain() *Chain {
 	return bc
 }
 
-func (bc *Chain) NewBlock(prevBlockHash []byte, transactions []*Transaction) *Block {
+func (bc *Chain) NewBlock(prevBlockHash string, transactions []*Transaction) *Block {
 	block := &Block{
 		len(bc.blocks),
 		time.Now().Unix(),
 		prevBlockHash,
-		[]byte{},
+		"",
 		transactions,
 		0,
 	}
@@ -26,7 +26,7 @@ func (bc *Chain) NewBlock(prevBlockHash []byte, transactions []*Transaction) *Bl
 }
 
 func (bc *Chain) CreateGenesisBlock() {
-	bc.blocks = append(bc.blocks, bc.NewBlock([]byte{}, []*Transaction{}))
+	bc.blocks = append(bc.blocks, bc.NewBlock("", []*Transaction{}))
 }
 
 func (bc *Chain) createBlock() *Block {
