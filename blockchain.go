@@ -14,7 +14,15 @@ func NewBlockchain() *Blockchain {
 }
 
 func (bc *Blockchain) NewBlock(data string, prevBlockHash []byte, transactions []*Transaction) *Block {
-	block := &Block{len(bc.blocks), time.Now().Unix(), []byte(data), prevBlockHash, []byte{}, transactions}
+	block := &Block{
+		len(bc.blocks),
+		time.Now().Unix(),
+		[]byte(data),
+		prevBlockHash,
+		[]byte{},
+		transactions,
+		0,
+	}
 	block.SetHash()
 	return block
 }

@@ -13,6 +13,7 @@ type Block struct {
 	PrevBlockHash []byte
 	Hash []byte
 	Transactions []*Transaction
+	Nonce int64
 }
 
 func (b *Block) SetHash() {
