@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"golang.org/x/net/websocket"
+	"io"
 	"net/http"
 )
 
@@ -32,6 +33,32 @@ func (node *Node) shutdownP2pServer () {
 }
 
 func (node *Node) handleP2pConnection(conn *websocket.Conn) {
-	// TODO
+	for {
+		var message []byte
+		if err := websocket.Message.Receive(conn, message); err != nil {
+			if err == io.EOF {
+				node.disconnect(conn)
+				break
+			}
+			fmt.Println(err)
+			continue
+		}
+	}
 }
 
+func (node *Node) disconnect(conn *websocket.Conn) {
+	defer conn.Close()
+	fmt.Println("disconnect: ", conn.RemoteAddr().String())
+	node.deleteWsConnection(conn)
+}
+
+func (node *Node) deleteWsConnection(conn *websocket.Conn) {
+	conns := []*websocket.Conn{}
+	for _, c := range node.WebSocketConnections {
+		if c != conn {
+			conns = append(conns, c)
+		}
+	}
+
+	node.WebSocketConnections = conns
+}
