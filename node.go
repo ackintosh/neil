@@ -13,6 +13,7 @@ import (
 type Node struct {
 	Chain     *Chain
 	ApiServer *http.Server
+	Nodes []string
 }
 
 func NewNode() *Node {
@@ -20,7 +21,7 @@ func NewNode() *Node {
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
 
-	node := &Node{chain, nil}
+	node := &Node{chain, nil, []string{}}
 	node.buildApiServer()
 
 	return node
