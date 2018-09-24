@@ -13,7 +13,7 @@ import (
 type Node struct {
 	Chain     *Chain
 	ApiServer *http.Server
-	Nodes []string
+	Peers     []string
 }
 
 func NewNode() *Node {

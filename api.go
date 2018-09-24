@@ -10,7 +10,7 @@ func (node *Node) buildApiServer() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/chain", node.chainHandler)
 	mux.HandleFunc("/transactions/new", node.newTransactionHandler)
-	mux.HandleFunc("/nodes", node.nodesHandler)
+	mux.HandleFunc("/peers", node.peersHandler)
 
 	node.ApiServer = &http.Server{
 		Handler: mux,
@@ -45,19 +45,19 @@ func (node *Node) newTransactionHandler(w http.ResponseWriter, r *http.Request) 
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (node *Node) nodesHandler(w http.ResponseWriter, r *http.Request) {
+func (node *Node) peersHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		node.postNodesHandler(w, r)
+		node.postPeersHandler(w, r)
 		return
 	} else if r.Method == http.MethodGet {
-		node.getNodesHandler(w, r)
+		node.getPeersHandler(w, r)
 		return
 	}
 
 	w.WriteHeader(http.StatusNotFound)
 }
 
-func (node *Node) postNodesHandler(w http.ResponseWriter, r *http.Request) {
+func (node *Node) postPeersHandler(w http.ResponseWriter, r *http.Request) {
 	var params struct {
 		Address string `json:"Address"`
 	}
@@ -68,12 +68,12 @@ func (node *Node) postNodesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	node.Nodes = append(node.Nodes, params.Address)
+	node.Peers = append(node.Peers, params.Address)
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (node *Node) getNodesHandler(w http.ResponseWriter, r *http.Request) {
-	nodes, err := json.Marshal(node.Nodes)
+func (node *Node) getPeersHandler(w http.ResponseWriter, r *http.Request) {
+	peers, err := json.Marshal(node.Peers)
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -81,5 +81,5 @@ func (node *Node) getNodesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(nodes)
+	w.Write(peers)
 }
