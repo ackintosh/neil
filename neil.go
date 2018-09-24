@@ -10,6 +10,7 @@ import (
 func main() {
 	node := NewNode()
 	node.runApiServer()
+	node.runP2pServer()
 	node.runMining()
 
 	fmt.Println("Neil is running...")
@@ -21,6 +22,7 @@ func main() {
 	s := <-signalCh
 	fmt.Println("\nsignal: ", s)
 	node.shutdownApiServer()
+	node.shutdownP2pServer()
 
 	fmt.Println("\nNeil has completely shutdown. Thanks for giving it a try!")
 }

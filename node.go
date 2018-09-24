@@ -6,14 +6,17 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"golang.org/x/net/websocket"
 	"net/http"
 	"strconv"
 )
 
 type Node struct {
-	Chain     *Chain
-	ApiServer *http.Server
-	Peers     []string
+	Chain                *Chain
+	ApiServer            *http.Server
+	P2pServer            *http.Server
+	WebSocketConnections []*websocket.Conn
+	Peers                []string
 }
 
 func NewNode() *Node {
@@ -21,8 +24,9 @@ func NewNode() *Node {
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
 
-	node := &Node{chain, nil, []string{}}
+	node := &Node{chain, nil, nil, []*websocket.Conn{},[]string{}}
 	node.buildApiServer()
+	node.buildP2pServer()
 
 	return node
 }
@@ -39,6 +43,34 @@ func (node *Node) runApiServer() {
 func (node *Node) shutdownApiServer() {
 	fmt.Println("Shutting down REST API server.")
 	node.ApiServer.Shutdown(context.Background())
+}
+
+func (node *Node) buildP2pServer() {
+	node.P2pServer = &http.Server{
+		Handler: websocket.Handler(func(ws *websocket.Conn) {
+			node.WebSocketConnections = append(node.WebSocketConnections, ws)
+			node.handleP2pConnection(ws)
+		}),
+		Addr: ":6001",
+	}
+}
+
+func (node *Node) runP2pServer() {
+	go func() {
+		fmt.Println("WebSocket server for P2P communication is listening on ws://localhost:6001")
+		if err := node.P2pServer.ListenAndServe(); err != nil {
+			fmt.Println(err)
+		}
+	}()
+}
+
+func (node *Node) shutdownP2pServer () {
+	fmt.Println("Shutting down WebSocket server.")
+	node.P2pServer.Shutdown(context.Background())
+}
+
+func (node *Node) handleP2pConnection(conn *websocket.Conn) {
+	// TODO
 }
 
 func (node *Node) runMining() {
