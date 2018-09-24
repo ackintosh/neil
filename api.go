@@ -49,6 +49,9 @@ func (node *Node) nodesHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		node.postNodesHandler(w, r)
 		return
+	} else if r.Method == http.MethodGet {
+		node.getNodesHandler(w, r)
+		return
 	}
 
 	w.WriteHeader(http.StatusNotFound)
@@ -67,4 +70,16 @@ func (node *Node) postNodesHandler(w http.ResponseWriter, r *http.Request) {
 
 	node.Nodes = append(node.Nodes, params.Address)
 	w.WriteHeader(http.StatusCreated)
+}
+
+func (node *Node) getNodesHandler(w http.ResponseWriter, r *http.Request) {
+	nodes, err := json.Marshal(node.Nodes)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(nodes)
 }
