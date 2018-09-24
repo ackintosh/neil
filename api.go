@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -16,6 +17,20 @@ func (node *Node) buildApiServer() {
 		Handler: mux,
 		Addr: ":3001",
 	}
+}
+
+func (node *Node) runApiServer() {
+	go func() {
+		fmt.Println("REST API server is listening on http://localhost:3001")
+		if err := node.ApiServer.ListenAndServe(); err != nil {
+			fmt.Println(err)
+		}
+	}()
+}
+
+func (node *Node) shutdownApiServer() {
+	fmt.Println("Shutting down REST API server.")
+	node.ApiServer.Shutdown(context.Background())
 }
 
 func (node *Node) chainHandler(w http.ResponseWriter, r *http.Request) {

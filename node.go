@@ -31,20 +31,6 @@ func NewNode() *Node {
 	return node
 }
 
-func (node *Node) runApiServer() {
-	go func() {
-		fmt.Println("REST API server is listening on http://localhost:3001")
-		if err := node.ApiServer.ListenAndServe(); err != nil {
-			fmt.Println(err)
-		}
-	}()
-}
-
-func (node *Node) shutdownApiServer() {
-	fmt.Println("Shutting down REST API server.")
-	node.ApiServer.Shutdown(context.Background())
-}
-
 func (node *Node) buildP2pServer() {
 	node.P2pServer = &http.Server{
 		Handler: websocket.Handler(func(ws *websocket.Conn) {
