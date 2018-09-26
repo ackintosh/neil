@@ -43,6 +43,7 @@ func (node *Node) handleP2pConnection(conn *websocket.Conn) {
 			fmt.Println(err)
 			continue
 		}
+		websocket.Message.Send(conn, message)
 	}
 }
 
