@@ -1,13 +1,20 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
 )
 
+var (
+	apiPort = flag.Int("apiPort", 3001, "REST API server port")
+	p2pPort = flag.Int("p2pPort", 6001, "WebSocket server port for P2P communication")
+)
+
 func main() {
+	flag.Parse()
 	node := NewNode()
 	node.runApiServer()
 	node.runP2pServer()

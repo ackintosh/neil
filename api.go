@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"golang.org/x/net/websocket"
 	"net/http"
+	"strconv"
 )
 
 func (node *Node) buildApiServer() {
@@ -15,13 +17,13 @@ func (node *Node) buildApiServer() {
 
 	node.ApiServer = &http.Server{
 		Handler: mux,
-		Addr: ":3001",
+		Addr: ":" + strconv.Itoa(*apiPort),
 	}
 }
 
 func (node *Node) runApiServer() {
 	go func() {
-		fmt.Println("REST API server is listening on http://localhost:3001")
+		fmt.Println("REST API server is listening on http://localhost" + node.ApiServer.Addr)
 		if err := node.ApiServer.ListenAndServe(); err != nil {
 			fmt.Println(err)
 		}

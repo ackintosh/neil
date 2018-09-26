@@ -6,6 +6,7 @@ import (
 	"golang.org/x/net/websocket"
 	"io"
 	"net/http"
+	"strconv"
 )
 
 func (node *Node) buildP2pServer() {
@@ -14,13 +15,13 @@ func (node *Node) buildP2pServer() {
 			node.WebSocketConnections = append(node.WebSocketConnections, ws)
 			node.handleP2pConnection(ws)
 		}),
-		Addr: ":6001",
+		Addr: ":" + strconv.Itoa(*p2pPort),
 	}
 }
 
 func (node *Node) runP2pServer() {
 	go func() {
-		fmt.Println("WebSocket server for P2P communication is listening on ws://localhost:6001")
+		fmt.Println("WebSocket server for P2P communication is listening on ws://localhost" + node.P2pServer.Addr)
 		if err := node.P2pServer.ListenAndServe(); err != nil {
 			fmt.Println(err)
 		}
