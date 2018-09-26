@@ -85,6 +85,14 @@ func (node *Node) postPeersHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ws, err := websocket.Dial(params.Address, "", "http://127.0.0.1")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("connected to the peer: ", ws.RemoteAddr().String())
+	node.WebSocketConnections = append(node.WebSocketConnections, ws)
+
 	node.Peers = append(node.Peers, params.Address)
 	w.WriteHeader(http.StatusCreated)
 }
