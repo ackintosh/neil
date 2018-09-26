@@ -36,7 +36,7 @@ func (node *Node) shutdownP2pServer () {
 func (node *Node) handleP2pConnection(conn *websocket.Conn) {
 	for {
 		var message []byte
-		if err := websocket.Message.Receive(conn, message); err != nil {
+		if err := websocket.Message.Receive(conn, &message); err != nil {
 			if err == io.EOF {
 				node.disconnect(conn)
 				break
