@@ -44,7 +44,16 @@ func (node *Node) handleP2pConnection(conn *websocket.Conn) {
 			fmt.Println(err)
 			continue
 		}
-		websocket.Message.Send(conn, message)
+
+		fmt.Println(string(message))
+	}
+}
+
+func (node *Node) broadcast(message []byte) {
+	for _, conn := range node.WebSocketConnections {
+		if err := websocket.Message.Send(conn, message); err != nil {
+			fmt.Println(err)
+		}
 	}
 }
 
