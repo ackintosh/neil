@@ -68,6 +68,5 @@ func (node *Node) proofOfWork() {
 	block.Nonce = nonce
 	block.Hash = hash
 	node.Chain.blocks = append(node.Chain.blocks, block)
-	fmt.Print("Added new block: ")
-	fmt.Println(block.Hash)
+	fmt.Println("Added new block: " + block.Hash)
 }
