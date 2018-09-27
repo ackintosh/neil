@@ -15,7 +15,6 @@ type Node struct {
 	ApiServer            *http.Server
 	P2pServer            *http.Server
 	WebSocketConnections []*websocket.Conn
-	Peers                []string
 }
 
 func NewNode() *Node {
@@ -23,7 +22,7 @@ func NewNode() *Node {
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
 
-	node := &Node{chain, nil, nil, []*websocket.Conn{},[]string{}}
+	node := &Node{chain, nil, nil, []*websocket.Conn{}}
 	node.buildApiServer()
 	node.buildP2pServer()
 

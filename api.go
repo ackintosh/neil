@@ -93,7 +93,6 @@ func (node *Node) postPeersHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("connected to the peer(triggered by the REST API `/peers`): ", ws.RemoteAddr().String())
 	node.WebSocketConnections = append(node.WebSocketConnections, ws)
 
-	node.Peers = append(node.Peers, params.Address)
 	w.WriteHeader(http.StatusCreated)
 }
 
