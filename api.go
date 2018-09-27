@@ -98,7 +98,11 @@ func (node *Node) postPeersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (node *Node) getPeersHandler(w http.ResponseWriter, r *http.Request) {
-	peers, err := json.Marshal(node.Peers)
+	var peersArray []map[string]interface{}
+	for _, c := range node.WebSocketConnections {
+		peersArray = append(peersArray, map[string]interface{}{"Address": c.RemoteAddr().String()})
+	}
+	peersJson, err := json.Marshal(peersArray)
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -106,5 +110,5 @@ func (node *Node) getPeersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(peers)
+	w.Write(peersJson)
 }
