@@ -2,17 +2,19 @@ package main
 
 import (
 	"bytes"
-	"context"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"golang.org/x/net/websocket"
 	"net/http"
 	"strconv"
 )
 
 type Node struct {
-	Chain     *Chain
-	ApiServer *http.Server
+	Chain                *Chain
+	ApiServer            *http.Server
+	P2pServer            *http.Server
+	WebSocketConnections []*websocket.Conn
 }
 
 func NewNode() *Node {
@@ -20,24 +22,11 @@ func NewNode() *Node {
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
 
-	node := &Node{chain, nil}
+	node := &Node{chain, nil, nil, []*websocket.Conn{}}
 	node.buildApiServer()
+	node.buildP2pServer()
 
 	return node
-}
-
-func (node *Node) runApiServer() {
-	go func() {
-		fmt.Println("REST API server is listening on http://localhost:3001")
-		if err := node.ApiServer.ListenAndServe(); err != nil {
-			fmt.Println(err)
-		}
-	}()
-}
-
-func (node *Node) shutdownApiServer() {
-	fmt.Println("Shutting down REST API server.")
-	node.ApiServer.Shutdown(context.Background())
 }
 
 func (node *Node) runMining() {
@@ -78,6 +67,6 @@ func (node *Node) proofOfWork() {
 	block.Nonce = nonce
 	block.Hash = hash
 	node.Chain.blocks = append(node.Chain.blocks, block)
-	fmt.Print("Added new block: ")
-	fmt.Println(block.Hash)
+	fmt.Println("Added new block: " + block.Hash)
+	node.broadcast([]byte("Hi, I've mined a new block! Its hash is: " + block.Hash))
 }

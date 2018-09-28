@@ -72,6 +72,32 @@ paths:
           description: A transaction is created successfully.
         500:
           description: Internal server error.
+  /peers:
+    get:
+      description: List connections which the node is connecting.
+      operationId: getPeers
+      responses:
+        200:
+          description: Peers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Peer'
+    post:
+      description: Add new connection
+      operationId: postPeer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Peer'
+      responses:
+        201:
+          description: A connection to the peer is established successfully.
+        500:
+          description: Internal server error.
 components:
   schemas:
     Block:
@@ -113,3 +139,9 @@ components:
         Hash:
           type: string
           example: 2dcff73a5bac8dd3c14d7d125640bf805a6731f74e045f5a81373cdd91d4e80e
+    Peer:
+      type: opbject
+      properties:
+        Address:
+          type: string
+          example: ws://127.0.01:6006
