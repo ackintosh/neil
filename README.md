@@ -122,9 +122,12 @@ $ curl -v http://localhost:3001/peers -d '{"Address": "ws://127.0.01:6006"}'
 - Node1
 
 ```bash
+[From: 6006] Hi, I've mined a new block! Its hash is: 00000ea815ce4e3ac511e4058f9af1b0d98f8806a58637c18a69eebf8adc8392
+[From: 6006] Hi, I've mined a new block! Its hash is: 00000b4217a25261ed871f9f784dc008f8dea1590a11e1823943ef641c479ca4
 Added new block: 000006a4b84e827c42a1b9286af7dccf84eaaedc4fcf0941d4adc681594811cb
 Added new block: 00000988e261bfd264b6697efab046338a5d205ae75ae2a2a1af1eb99300cc78
 Added new block: 000002ef56d438f4fde9b9215c59099107d0cb17cb02829ef81c47478fca8268
+[From: 6006] Hi, I've mined a new block! Its hash is: 00000f330495165c416a932fd2f1a3b7413ec6bf2785ec2511032864ddb20e6d
 Added new block: 00000facff4d62f7080456c2a3a712295dca835c8fceaa828d0a35135f5b22b0
 ```
 
@@ -133,9 +136,9 @@ Added new block: 00000facff4d62f7080456c2a3a712295dca835c8fceaa828d0a35135f5b22b
 ```bash
 Added new block: 00000ea815ce4e3ac511e4058f9af1b0d98f8806a58637c18a69eebf8adc8392
 Added new block: 00000b4217a25261ed871f9f784dc008f8dea1590a11e1823943ef641c479ca4
-Hi, I've mined a new block! Its hash is: 000006a4b84e827c42a1b9286af7dccf84eaaedc4fcf0941d4adc681594811cb
-Hi, I've mined a new block! Its hash is: 00000988e261bfd264b6697efab046338a5d205ae75ae2a2a1af1eb99300cc78
-Hi, I've mined a new block! Its hash is: 000002ef56d438f4fde9b9215c59099107d0cb17cb02829ef81c47478fca8268
+[From: 6001] Hi, I've mined a new block! Its hash is: 000006a4b84e827c42a1b9286af7dccf84eaaedc4fcf0941d4adc681594811cb
+[From: 6001] Hi, I've mined a new block! Its hash is: 00000988e261bfd264b6697efab046338a5d205ae75ae2a2a1af1eb99300cc78
+[From: 6001] Hi, I've mined a new block! Its hash is: 000002ef56d438f4fde9b9215c59099107d0cb17cb02829ef81c47478fca8268
 Added new block: 00000f330495165c416a932fd2f1a3b7413ec6bf2785ec2511032864ddb20e6d
 ```
 
