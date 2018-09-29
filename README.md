@@ -97,7 +97,7 @@ $ curl -s http://localhost:3001/chain | jq
 ### Add peer to notify to another one that a new block is mined
 
 ```bash
-$ curl -v http://localhost:3001/peers -d '{"Address": "ws://127.0.01:6006"}'
+$ curl -v http://localhost:3001/peers -d '{"Address": "ws://127.0.0.1:6006"}'
 
 *   Trying ::1...
 * TCP_NODELAY set
