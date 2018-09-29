@@ -43,21 +43,7 @@ func (node *Node) proofOfWork() {
 	var nonce int64 = 0
 	var hash string
 	for {
-		var txHashes [][]byte
-		for _, tx := range block.Transactions {
-			txHashes = append(txHashes, []byte(tx.Hash))
-		}
-		headers := bytes.Join(
-			[][]byte{
-				[]byte(block.PrevBlockHash),
-				bytes.Join(txHashes, []byte{}),
-				[]byte(strconv.FormatInt(block.Timestamp, 10)),
-				[]byte(strconv.FormatInt(nonce, 10)),
-			},
-			[]byte{},
-		)
-		hash32Bytes := sha256.Sum256(headers)
-		hash = hex.EncodeToString(hash32Bytes[:])
+		hash = node.calculateBlockHash(block, nonce)
 		if hash[:6] == "000000" {
 			break
 		}
@@ -76,4 +62,22 @@ func (node *Node) proofOfWork() {
 	}
 
 	node.broadcast(message)
+}
+
+func (node *Node) calculateBlockHash(block *Block, nonce int64) string {
+	var txHashes [][]byte
+	for _, tx := range block.Transactions {
+		txHashes = append(txHashes, []byte(tx.Hash))
+	}
+	headers := bytes.Join(
+		[][]byte{
+			[]byte(block.PrevBlockHash),
+			bytes.Join(txHashes, []byte{}),
+			[]byte(strconv.FormatInt(block.Timestamp, 10)),
+			[]byte(strconv.FormatInt(nonce, 10)),
+		},
+		[]byte{},
+	)
+	hash32Bytes := sha256.Sum256(headers)
+	return hex.EncodeToString(hash32Bytes[:])
 }
