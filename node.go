@@ -44,7 +44,7 @@ func (node *Node) proofOfWork() {
 	var hash string
 	for {
 		hash = node.calculateBlockHash(block, nonce)
-		if hash[:6] == "000000" {
+		if node.isMeetCriteria(hash) {
 			break
 		}
 		nonce++
@@ -80,4 +80,8 @@ func (node *Node) calculateBlockHash(block *Block, nonce int64) string {
 	)
 	hash32Bytes := sha256.Sum256(headers)
 	return hex.EncodeToString(hash32Bytes[:])
+}
+
+func (node *Node) isMeetCriteria(blockHash string) bool {
+	return blockHash[:6] == "000000"
 }
