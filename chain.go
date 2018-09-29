@@ -26,7 +26,9 @@ func (bc *Chain) NewBlock(prevBlockHash string, transactions []*Transaction) *Bl
 }
 
 func (bc *Chain) CreateGenesisBlock() {
-	bc.blocks = append(bc.blocks, bc.NewBlock("", []*Transaction{}))
+	genesisBlock := bc.NewBlock("0", []*Transaction{})
+	genesisBlock.Hash = "000001ec215dbddf866b9ac3219d8d33875ff0c19ca88ab84cf83b2e3397b489"
+	bc.blocks = append(bc.blocks, genesisBlock)
 }
 
 func (bc *Chain) createBlock() *Block {
@@ -35,6 +37,10 @@ func (bc *Chain) createBlock() *Block {
 	bc.transactions = []*Transaction{}
 
 	return newBlock
+}
+
+func (bc *Chain) getLatestBlock() *Block {
+	return bc.blocks[len(bc.blocks) - 1]
 }
 
 func (bc *Chain) AddTransaction(tx *Transaction) {

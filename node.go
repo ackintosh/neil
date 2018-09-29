@@ -43,22 +43,8 @@ func (node *Node) proofOfWork() {
 	var nonce int64 = 0
 	var hash string
 	for {
-		var txHashes [][]byte
-		for _, tx := range block.Transactions {
-			txHashes = append(txHashes, []byte(tx.Hash))
-		}
-		headers := bytes.Join(
-			[][]byte{
-				[]byte(block.PrevBlockHash),
-				bytes.Join(txHashes, []byte{}),
-				[]byte(strconv.FormatInt(block.Timestamp, 10)),
-				[]byte(strconv.FormatInt(nonce, 10)),
-			},
-			[]byte{},
-		)
-		hash32Bytes := sha256.Sum256(headers)
-		hash = hex.EncodeToString(hash32Bytes[:])
-		if hash[:5] == "00000" {
+		hash = node.calculateBlockHash(block, nonce)
+		if node.isMeetCriteria(hash) {
 			break
 		}
 		nonce++
@@ -68,5 +54,34 @@ func (node *Node) proofOfWork() {
 	block.Hash = hash
 	node.Chain.blocks = append(node.Chain.blocks, block)
 	fmt.Println("Added new block: " + block.Hash)
-	node.broadcast([]byte("[From: " + strconv.Itoa(*p2pPort) + "] Hi, I've mined a new block! Its hash is: " + block.Hash))
+
+	message, err := newLatestBlockMessage(block)
+	if err != nil {
+		fmt.Println("Failed to build a message: ", err)
+		return
+	}
+
+	node.broadcast(message)
+}
+
+func (node *Node) calculateBlockHash(block *Block, nonce int64) string {
+	var txHashes [][]byte
+	for _, tx := range block.Transactions {
+		txHashes = append(txHashes, []byte(tx.Hash))
+	}
+	headers := bytes.Join(
+		[][]byte{
+			[]byte(block.PrevBlockHash),
+			bytes.Join(txHashes, []byte{}),
+			[]byte(strconv.FormatInt(block.Timestamp, 10)),
+			[]byte(strconv.FormatInt(nonce, 10)),
+		},
+		[]byte{},
+	)
+	hash32Bytes := sha256.Sum256(headers)
+	return hex.EncodeToString(hash32Bytes[:])
+}
+
+func (node *Node) isMeetCriteria(blockHash string) bool {
+	return blockHash[:6] == "000000"
 }
