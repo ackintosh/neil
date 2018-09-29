@@ -13,7 +13,7 @@ const (
 	MessageTypeLatestBlock MessageType = iota
 )
 
-func newLatestBlockMessage(latestBlock Block) (*Message, error) {
+func newLatestBlockMessage(latestBlock *Block) (*Message, error) {
 	bytes, err := json.Marshal(latestBlock)
 	if err != nil {
 		return nil, err

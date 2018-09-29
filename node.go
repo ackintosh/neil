@@ -68,5 +68,12 @@ func (node *Node) proofOfWork() {
 	block.Hash = hash
 	node.Chain.blocks = append(node.Chain.blocks, block)
 	fmt.Println("Added new block: " + block.Hash)
-	node.broadcast([]byte("[From: " + strconv.Itoa(*p2pPort) + "] Hi, I've mined a new block! Its hash is: " + block.Hash))
+
+	message, err := newLatestBlockMessage(block)
+	if err != nil {
+		fmt.Println("Failed to build a message: ", err)
+		return
+	}
+
+	node.broadcast(message)
 }

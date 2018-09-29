@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"golang.org/x/net/websocket"
 	"io"
@@ -49,9 +50,14 @@ func (node *Node) handleP2pConnection(conn *websocket.Conn) {
 	}
 }
 
-func (node *Node) broadcast(message []byte) {
+func (node *Node) broadcast(message *Message) {
+	marshaledMessage, err := json.Marshal(message)
+	if err != nil {
+		fmt.Println("Failed to marshal a message: ", err)
+	}
+
 	for _, conn := range node.WebSocketConnections {
-		if err := websocket.Message.Send(conn, message); err != nil {
+		if err := websocket.Message.Send(conn, marshaledMessage); err != nil {
 			fmt.Println(err)
 		}
 	}
