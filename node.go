@@ -68,5 +68,5 @@ func (node *Node) proofOfWork() {
 	block.Hash = hash
 	node.Chain.blocks = append(node.Chain.blocks, block)
 	fmt.Println("Added new block: " + block.Hash)
-	node.broadcast([]byte("Hi, I've mined a new block! Its hash is: " + block.Hash))
+	node.broadcast([]byte("[From: " + strconv.Itoa(*p2pPort) + "] Hi, I've mined a new block! Its hash is: " + block.Hash))
 }
