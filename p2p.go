@@ -75,6 +75,11 @@ func (node *Node) handleLatestBlockMessage(message Message) {
 		return
 	}
 
+	if node.calculateBlockHash(&receivedBlock, receivedBlock.Nonce) != receivedBlock.Hash || !node.isMeetCriteria(receivedBlock.Hash){
+		fmt.Println("The received block is invalid.")
+		return
+	}
+
 	node.Chain.blocks = append(node.Chain.blocks, &receivedBlock)
 	fmt.Println("Appended the received block to current chain: ", message.Data)
 }
