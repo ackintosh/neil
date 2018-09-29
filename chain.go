@@ -39,6 +39,10 @@ func (bc *Chain) createBlock() *Block {
 	return newBlock
 }
 
+func (bc *Chain) getLatestBlock() *Block {
+	return bc.blocks[len(bc.blocks) - 1]
+}
+
 func (bc *Chain) AddTransaction(tx *Transaction) {
 	bc.transactions = append(bc.transactions, tx)
 }

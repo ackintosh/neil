@@ -36,8 +36,8 @@ func (node *Node) shutdownP2pServer () {
 
 func (node *Node) handleP2pConnection(conn *websocket.Conn) {
 	for {
-		var message []byte
-		if err := websocket.Message.Receive(conn, &message); err != nil {
+		var rawMessage []byte
+		if err := websocket.Message.Receive(conn, &rawMessage); err != nil {
 			if err == io.EOF {
 				node.disconnect(conn)
 				break
@@ -46,8 +46,37 @@ func (node *Node) handleP2pConnection(conn *websocket.Conn) {
 			continue
 		}
 
-		fmt.Println(string(message))
+		var message Message
+		if err := json.Unmarshal(rawMessage, &message); err != nil {
+			fmt.Println("Failed to Unmarshal message: ", err)
+			continue
+		}
+
+		if message.Type == MessageTypeLatestBlock {
+			node.handleLatestBlockMessage(message)
+		}
 	}
+}
+
+func (node *Node) handleLatestBlockMessage(message Message) {
+	var receivedBlock Block
+	if err := json.Unmarshal([]byte(message.Data), &receivedBlock); err != nil {
+		fmt.Println("Failed to Unmarshal message: ", err)
+		return
+	}
+
+	if receivedBlock.Index <= node.Chain.getLatestBlock().Index {
+		fmt.Println("Received block is not longer current chain. Do nothing.")
+		return
+	}
+
+	if receivedBlock.PrevBlockHash != node.Chain.getLatestBlock().Hash {
+		fmt.Println("Probably the received block is from other forked chain. That is not supported for now.")
+		return
+	}
+
+	node.Chain.blocks = append(node.Chain.blocks, &receivedBlock)
+	fmt.Println("Appended the received block to current chain: ", message.Data)
 }
 
 func (node *Node) broadcast(message *Message) {
