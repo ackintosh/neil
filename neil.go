@@ -11,6 +11,7 @@ import (
 var (
 	apiPort = flag.Int("apiPort", 3001, "REST API server port")
 	p2pPort = flag.Int("p2pPort", 6001, "WebSocket server port for P2P communication")
+	devMode = flag.Bool("dev", false, "The node this flag passed doesn't mine new block.")
 )
 
 func main() {
@@ -18,7 +19,11 @@ func main() {
 	node := NewNode()
 	node.runApiServer()
 	node.runP2pServer()
-	node.runMining()
+	if *devMode {
+		fmt.Println("This node is running as 'dev' mode, mining is disabled.")
+	} else {
+		node.runMining()
+	}
 
 	fmt.Println("Neil is running...")
 	fmt.Println("Press Ctrl+C to stop. :)")
