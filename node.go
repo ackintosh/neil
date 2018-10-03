@@ -16,7 +16,7 @@ type Node struct {
 	ApiServer            *http.Server
 	P2pServer            *http.Server
 	WebSocketConnections []*websocket.Conn
-	NewChainCh chan event.ChainUpdated
+	ChainUpdateCh        chan event.ChainUpdated
 }
 
 func NewNode() *Node {
@@ -54,7 +54,7 @@ func (node *Node) proofOfWork() {
 MINING:
 	for {
 		select {
-		case event := <-node.NewChainCh:
+		case event := <-node.ChainUpdateCh:
 			block = node.Chain.createBlock()
 			nonce = 0
 			fmt.Printf(
