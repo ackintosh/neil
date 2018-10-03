@@ -1,5 +1,5 @@
 package event
 
-type NewChainEvent struct {
+type ChainUpdated struct {
 
 }

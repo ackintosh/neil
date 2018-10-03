@@ -16,7 +16,7 @@ type Node struct {
 	ApiServer            *http.Server
 	P2pServer            *http.Server
 	WebSocketConnections []*websocket.Conn
-	NewChainCh chan event.NewChainEvent
+	NewChainCh chan event.ChainUpdated
 }
 
 func NewNode() *Node {
@@ -29,7 +29,7 @@ func NewNode() *Node {
 		nil,
 		nil,
 		[]*websocket.Conn{},
-		make(chan event.NewChainEvent, 1),
+		make(chan event.ChainUpdated, 1),
 	}
 	node.buildApiServer()
 	node.buildP2pServer()
