@@ -49,12 +49,19 @@ func (node *Node) proofOfWork() {
 	block := node.Chain.createBlock()
 	var nonce int64 = 0
 	var hash string
+
+MINING:
 	for {
-		hash = node.calculateBlockHash(block, nonce)
-		if node.isMeetCriteria(hash) {
-			break
+		select {
+		case event := <-node.NewChainCh:
+			fmt.Println("Received a new block. we may restart current mining process. ", event)
+		default:
+			hash = node.calculateBlockHash(block, nonce)
+			if node.isMeetCriteria(hash) {
+				break MINING
+			}
+			nonce++
 		}
-		nonce++
 	}
 
 	block.Nonce = nonce
