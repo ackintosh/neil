@@ -55,6 +55,8 @@ func (node *Node) handleP2pConnection(conn *websocket.Conn) {
 
 		if message.Type == MessageTypeLatestBlock {
 			node.handleLatestBlockMessage(message)
+		} else if message.Type == MessageTypeNewTransaction {
+			node.handleNewTransactionMessage(message)
 		}
 	}
 }
@@ -84,6 +86,17 @@ func (node *Node) handleLatestBlockMessage(message Message) {
 	node.Chain.blocks = append(node.Chain.blocks, &receivedBlock)
 	fmt.Println("Appended the received block to current chain: ", message.Data)
 	node.ChainUpdateCh <- event.ChainUpdated{}
+}
+
+func (node *Node) handleNewTransactionMessage(message Message) {
+	var receivedTransaction Transaction
+	if err := json.Unmarshal([]byte(message.Data), &receivedTransaction); err != nil {
+		fmt.Println("Failed to unmarshal message: ", err)
+		return
+	}
+
+	node.Chain.AddTransaction(&receivedTransaction)
+	fmt.Println("Added a new transaction to current pool. received transaction: ", message.Data)
 }
 
 func (node *Node) broadcast(message *Message) {
