@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"github.com/ackintosh/neil/event"
 	"golang.org/x/net/websocket"
 	"net/http"
 	"strconv"
@@ -15,7 +16,7 @@ type Node struct {
 	ApiServer            *http.Server
 	P2pServer            *http.Server
 	WebSocketConnections []*websocket.Conn
-	NewChainCh chan NewChainEvent
+	NewChainCh chan event.NewChainEvent
 }
 
 func NewNode() *Node {
@@ -28,7 +29,7 @@ func NewNode() *Node {
 		nil,
 		nil,
 		[]*websocket.Conn{},
-		make(chan NewChainEvent, 1),
+		make(chan event.NewChainEvent, 1),
 	}
 	node.buildApiServer()
 	node.buildP2pServer()

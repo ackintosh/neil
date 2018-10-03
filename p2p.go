@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/ackintosh/neil/event"
 	"golang.org/x/net/websocket"
 	"io"
 	"net/http"
@@ -82,7 +83,7 @@ func (node *Node) handleLatestBlockMessage(message Message) {
 
 	node.Chain.blocks = append(node.Chain.blocks, &receivedBlock)
 	fmt.Println("Appended the received block to current chain: ", message.Data)
-	node.NewChainCh <- NewChainEvent{}
+	node.NewChainCh <- event.NewChainEvent{}
 }
 
 func (node *Node) broadcast(message *Message) {
