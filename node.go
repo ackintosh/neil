@@ -54,7 +54,13 @@ MINING:
 	for {
 		select {
 		case event := <-node.NewChainCh:
-			fmt.Println("Received a new block. we may restart current mining process. ", event)
+			block = node.Chain.createBlock()
+			nonce = 0
+			fmt.Printf(
+				"Received a new block, restarting mining with the index %d. event: %v\n",
+				block.Index,
+				event,
+			)
 		default:
 			hash = node.calculateBlockHash(block, nonce)
 			if node.isMeetCriteria(hash) {
