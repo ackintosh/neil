@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"github.com/ackintosh/neil/event"
 	"golang.org/x/net/websocket"
 	"net/http"
 	"strconv"
@@ -15,6 +16,7 @@ type Node struct {
 	ApiServer            *http.Server
 	P2pServer            *http.Server
 	WebSocketConnections []*websocket.Conn
+	ChainUpdateCh        chan event.ChainUpdated
 }
 
 func NewNode() *Node {
@@ -22,7 +24,13 @@ func NewNode() *Node {
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 1))
 	chain.AddTransaction(NewTransaction([]byte("Bob"), []byte("Ivan"), 2))
 
-	node := &Node{chain, nil, nil, []*websocket.Conn{}}
+	node := &Node{
+		chain,
+		nil,
+		nil,
+		[]*websocket.Conn{},
+		make(chan event.ChainUpdated, 1),
+	}
 	node.buildApiServer()
 	node.buildP2pServer()
 
@@ -42,12 +50,25 @@ func (node *Node) proofOfWork() {
 	block := node.Chain.createBlock()
 	var nonce int64 = 0
 	var hash string
+
+MINING:
 	for {
-		hash = node.calculateBlockHash(block, nonce)
-		if node.isMeetCriteria(hash) {
-			break
+		select {
+		case event := <-node.ChainUpdateCh:
+			block = node.Chain.createBlock()
+			nonce = 0
+			fmt.Printf(
+				"Received a new block, restarting mining with the index %d. event: %v\n",
+				block.Index,
+				event,
+			)
+		default:
+			hash = node.calculateBlockHash(block, nonce)
+			if node.isMeetCriteria(hash) {
+				break MINING
+			}
+			nonce++
 		}
-		nonce++
 	}
 
 	block.Nonce = nonce
