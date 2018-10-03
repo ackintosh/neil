@@ -58,7 +58,14 @@ func (node *Node) newTransactionHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	node.Chain.AddTransaction(NewTransaction(params.Sender, params.Recipient, params.Amount))
+	transaction := NewTransaction(params.Sender, params.Recipient, params.Amount)
+	node.Chain.AddTransaction(transaction)
+	message, err := newNewTransactionMessage(transaction)
+	if err != nil {
+		fmt.Println("Failed to build a message: ", err)
+	} else {
+		node.broadcast(message)
+	}
 	w.WriteHeader(http.StatusCreated)
 }
 

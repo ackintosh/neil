@@ -11,6 +11,7 @@ type MessageType int
 
 const (
 	MessageTypeLatestBlock MessageType = iota
+	MessageTypeNewTransaction MessageType = iota
 )
 
 func newLatestBlockMessage(latestBlock *Block) (*Message, error) {
@@ -21,6 +22,18 @@ func newLatestBlockMessage(latestBlock *Block) (*Message, error) {
 
 	return &Message{
 		Type: MessageTypeLatestBlock,
+		Data: string(bytes),
+	}, nil
+}
+
+func newNewTransactionMessage(transaction *Transaction) (*Message, error) {
+	bytes, err := json.Marshal(transaction)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Message{
+		Type: MessageTypeNewTransaction,
 		Data: string(bytes),
 	}, nil
 }
